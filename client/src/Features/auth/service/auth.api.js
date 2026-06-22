@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const Authapi = axios.create({
-      baseURL: "http://localhost:3000/api/auth",
+      baseURL: "/api/auth",
     withCredentials: true,
 })
 
@@ -16,4 +16,9 @@ export async function loginapi({email,password}) {
       email,password  
     })
      return response.data
+}
+
+export async function getMe() {
+    const response = await Authapi.get("/getme")
+    return response.data
 }

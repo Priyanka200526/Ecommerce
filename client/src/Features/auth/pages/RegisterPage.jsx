@@ -1,6 +1,7 @@
 import { useAuth } from "../hook/useAuth.js";
 import React, { useState } from 'react';
 import {useNavigate} from "react-router"
+import ContinueWithGoogle from "../components/ContinueWithGoogle.jsx";
 
 const Register = () => {
     const { handleRegister } = useAuth();
@@ -280,7 +281,7 @@ const Register = () => {
                             </div>
 
                             {/* Google SSO */}
-                            
+                               <ContinueWithGoogle />
 
                             {/* Footer Link */}
                             <p className="text-center text-[11px]" style={{ color: '#B5ADA3' }}>

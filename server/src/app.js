@@ -3,6 +3,11 @@ import morgan from "morgan";
 import userRoutes from "./routes/auth.routes.js";
 import cors from "cors"
 import cookieParser from "cookie-parser";
+import passport from "passport"
+import { Strategy as GoogleStrategy } from "passport-google-oauth20"
+import { config } from "./config/config.js";
+import productRouter from "./routes/product.routes.js";
+import CartRoutes from "./routes/cart.routes.js";
 
 const app = express()
 app.use(morgan("dev"))
@@ -11,11 +16,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
     origin: "http://localhost:5173",
-    methods: [ "GET", "POST", "PUT", "DELETE" ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }))
 
-app.use("/api/auth",userRoutes)
+app.use(passport.initialize())
+passport.use(new GoogleStrategy({
+    clientID: config.GOOGLE_CLIENT_ID,
+    clientSecret: config.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/api/auth/google/callback"
+}, (accessToken, refreshToken, profile, done) => {
+    return done(null, profile);
+}))
+app.use("/api/auth", userRoutes)
+app.use("/api/products",productRouter)
+app.use("/api/cart",CartRoutes)
 
 
 

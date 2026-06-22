@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hook/useAuth';
 import { useNavigate } from "react-router";
+import ContinueWithGoogle from '../components/ContinueWithGoogle';
 
 
 const Login = () => {
@@ -24,7 +25,7 @@ const Login = () => {
             if (user.role == "buyer") {
                 navigate("/");
             } else if (user.role == "seller") {
-                navigate("/");
+                navigate("/seller/dashboard");
             }
         } catch (error) {
             console.error("Login failed", error);
@@ -212,7 +213,7 @@ const Login = () => {
                             </div>
 
                             {/* Google SSO */}
-                          
+                           <ContinueWithGoogle />
 
                             {/* Footer Link */}
                             <p className="text-center text-[11px]" style={{ color: '#B5ADA3' }}>
